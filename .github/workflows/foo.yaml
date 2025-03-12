@@ -1,0 +1,38 @@
+name: Nightly stress test
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+
+  linux-stress:
+    name: linux-stress
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run unit tests under stress
+        run: |
+          scripts/stress-lol.sh
+
+  post-issue:
+    name: linux-post-issue
+    needs: linux-stress
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Post issue on failure
+        id: create-or-update-unique-issue
+        uses: ./.github/actions/post-issue
+        with:
+          title: "Nightly stress failure"
+          body: "The nightly stress run failed on ${{ github.sha }}. Please review the run [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})."
+          unique-title-includes: "Nightly stress failure"
+          labels: "C-test-failure"
