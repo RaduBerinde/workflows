@@ -14,8 +14,8 @@ jobs:
       - name: Check Pebble deps
         id: run_script
         run: |
-          OUTPUT=$(scripts/check-pebble-dep.sh 2>&1)
-          EXIT_CODE=$?
+          EXIT_CODE=0
+          OUTPUT=$(scripts/check-pebble-dep.sh 2>&1) || EXIT_CODE=$?
           echo "$OUTPUT"
           # Set output as a multi-line string.
           echo "output<<EOF" >> $GITHUB_OUTPUT
