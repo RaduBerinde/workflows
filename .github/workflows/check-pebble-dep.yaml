@@ -26,5 +26,16 @@ jobs:
 
       - name: Notify Slack on failure
         if: steps.run_script.outputs.exitcode != '0'
-        run:
-          echo "${{ steps.run_script.outputs.output }}"
+        uses: slackapi/slack-github-action@v2.1.0
+        with:
+          method: chat.postMessage
+          token: xoxb-lolomgwtf
+          # The channel ID is for #storage-notifications.
+          payload: |
+            channel: C08JE13CM9S
+            text: |
+              Some Pebble dependencies are not up to date. Details below:
+              ```
+              ${{ steps.run_script.outputs.output }}
+              ```
+        
