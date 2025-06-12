@@ -41,12 +41,13 @@ jobs:
           method: chat.postMessage
           token: xoxb-lolomgwtf
           # The channel ID is for #storage-notifications.
-          payload: ${{ toJson({
-            channel: 'C08JE13CM9S',
-            text: format(
-              'Some Pebble dependencies are not up to date. Details below:\n```{0}```',
-              steps.run_script.outputs.output
-            )
-          }) }}
+          payload: |
+            ${{ toJson({
+              channel: 'C08JE13CM9S',
+              text: format(
+                'Some Pebble dependencies are not up to date. Details below:\n```{0}```',
+                steps.run_script.outputs.output
+              )
+            }) }}
 
         
