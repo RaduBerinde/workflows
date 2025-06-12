@@ -32,7 +32,7 @@ jobs:
         run: |
           cat<<EOF
               text: ${{ toJson(format(
-                'Some Pebble dependencies are not up to date. Details below:\n```{0}```',
+                'Some Pebble dependencies are not up to date. Details below:\n```\n{0}\n```',
                 steps.run_script.outputs.output)) }}
           EOF
 
@@ -46,8 +46,8 @@ jobs:
           # The channel ID is for #storage-notifications.
           payload: |
             {
-              channel: 'C08JE13CM9S',
-              text: ${{ toJson(format(
+              "channel": "C08JE13CM9S",
+              "text": ${{ toJson(format(
                 'Some Pebble dependencies are not up to date. Details below:\n```{0}```',
                 steps.run_script.outputs.output)) }}
             }
