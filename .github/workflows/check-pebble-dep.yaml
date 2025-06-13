@@ -31,9 +31,7 @@ jobs:
       - name: Debug
         run: |
           cat<<EOF
-              text: ${{ toJson(format(
-                'Some Pebble dependencies are not up to date. Details below:\n```\n{0}\n```',
-                steps.run_script.outputs.output)) }}
+          "text": ${{ toJson(steps.run_script.outputs.output) }}
           EOF
 
 
